@@ -319,7 +319,7 @@ struct Node
 // -1 (either can be 1st)), returns the number of registers
 // needed for the node.
 // This number is known as Ershov number.
-// See also Strahler number and Sethi–Ullman algorithm.
+// See also Strahler number and Sethi-Ullman algorithm.
 int Node::SelectFirst()
 {
   if (!child_[0])
