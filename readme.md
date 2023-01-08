@@ -12,8 +12,6 @@
 
 [8086-specific approach](#8086-specific-approach)
 
-[Implementation details](#implementation-details)
-
 [Resources](#resources)
 
 ## What is this?
@@ -107,7 +105,7 @@ C and assembly operators, instructions and syntax and ASCII art):
 
 ## Scope
 
-Ouside of the scope of this work are:
+Outside of the scope of this work are:
 *   data types other than 8-bit bytes and 16-bit words (e.g. floats, structs)
 *   conditional/ternary operators like in C/C++
 *   function calls and calling conventions
@@ -192,7 +190,7 @@ and
       mark the node this register holds as not having a location
       mark the register as holding no node
 
-Using this algorithm we will arive at this code generated for the above tree
+Using this algorithm we will arrive at this code generated for the above tree
 (let's replicate the tree here):
 
                   op
@@ -309,7 +307,7 @@ able to tell what's where, by examining the array or a node and we'll be
 modifying the array and nodes appropriately to reflect the current allocations
 throughout the process.
 
-### Evaluation order of subsexpressions
+### Evaluation order of subexpressions
 
 When evaluating a binary operator (e.g. a + b) we should first evaluate the
 child/subexpression that uses more registers, then the one that uses fewer.
