@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2021, Alexey Frunze
+  Copyright (c) 2021-2023, Alexey Frunze
   2-clause BSD license.
 */
 #include <string>
@@ -1701,6 +1701,20 @@ void Run(Node* n)
   delete n;
 }
 
+#define USE_MANY_REGS5() \
+  new NodeAdd( \
+    new NodeAdd(new NodeAdd(new NodeAdd(new NodeInt(1), new NodeInt(2)),    \
+                            new NodeAdd(new NodeInt(3), new NodeInt(4))),   \
+                new NodeAdd(new NodeAdd(new NodeInt(5), new NodeInt(6)),    \
+                            new NodeAdd(new NodeInt(7), new NodeInt(8)))),  \
+    new NodeAdd(new NodeAdd(new NodeAdd(new NodeInt(9), new NodeInt(10)),   \
+                            new NodeAdd(new NodeInt(11), new NodeInt(12))), \
+                new NodeAdd(new NodeAdd(new NodeInt(13), new NodeInt(14)),  \
+                            new NodeAdd(new NodeInt(15), new NodeInt(16)))))
+#define USE_MANY_REGS6() new NodeAdd(USE_MANY_REGS5(), USE_MANY_REGS5())
+#define USE_MANY_REGS7() new NodeAdd(USE_MANY_REGS6(), USE_MANY_REGS6())
+#define USE_MANY_REGS8() new NodeAdd(USE_MANY_REGS7(), USE_MANY_REGS7())
+
 int main()
 {
   std::cout << "; Compile this file with nasm:\n"
@@ -1880,6 +1894,11 @@ int main()
                                                         new NodeInt(0))),
                                 new NodeInt(4)),
                   new NodeIDiv(new NodeInt(2), new NodeInt(1))));
+
+  Run(USE_MANY_REGS5()); // Use 5 regs out of 6, no spills.
+  Run(USE_MANY_REGS6()); // Use 6 regs out of 6, no spills.
+  Run(USE_MANY_REGS7()); // Use 7 regs, 1 spill.
+  Run(USE_MANY_REGS8()); // Use 8 regs, 2 spills in a branch.
 
   std::cout << "\n"
                "    mov  dx, msg_success\n"

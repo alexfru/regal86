@@ -1521,6 +1521,998 @@ org 0x100
     cmp  dx, 162                ; vr9
     jne  failure                ; vr9
 
+;                 16    (vr26)
+;             add     (vr27)
+;                 15    (vr25)
+;         add     (vr28)
+;                 14    (vr23)
+;             add     (vr24)
+;                 13    (vr22)
+;     add     (vr29)
+;                 12    (vr19)
+;             add     (vr20)
+;                 11    (vr18)
+;         add     (vr21)
+;                 10    (vr16)
+;             add     (vr17)
+;                 9    (vr15)
+; add     (vr30)
+;                 8    (vr11)
+;             add     (vr12)
+;                 7    (vr10)
+;         add     (vr13)
+;                 6    (vr8)
+;             add     (vr9)
+;                 5    (vr7)
+;     add     (vr14)
+;                 4    (vr4)
+;             add     (vr5)
+;                 3    (vr3)
+;         add     (vr6)
+;                 2    (vr1)
+;             add     (vr2)
+;                 1    (vr0)
+; ----
+; Regs needed (approximately): 5
+; --------
+    ;                           ; vr0
+    mov  ax, 1                  ; vr0
+    mov  cx, 2                  ; vr1
+    add  ax, cx                 ; vr2
+    mov  cx, 3                  ; vr3
+    mov  dx, 4                  ; vr4
+    add  cx, dx                 ; vr5
+    add  ax, cx                 ; vr6
+    mov  cx, 5                  ; vr7
+    mov  dx, 6                  ; vr8
+    add  cx, dx                 ; vr9
+    mov  dx, 7                  ; vr10
+    mov  bx, 8                  ; vr11
+    add  dx, bx                 ; vr12
+    add  cx, dx                 ; vr13
+    add  ax, cx                 ; vr14
+    mov  cx, 9                  ; vr15
+    mov  dx, 10                 ; vr16
+    add  cx, dx                 ; vr17
+    mov  dx, 11                 ; vr18
+    mov  bx, 12                 ; vr19
+    add  dx, bx                 ; vr20
+    add  cx, dx                 ; vr21
+    mov  dx, 13                 ; vr22
+    mov  bx, 14                 ; vr23
+    add  dx, bx                 ; vr24
+    mov  bx, 15                 ; vr25
+    mov  si, 16                 ; vr26
+    add  bx, si                 ; vr27
+    add  dx, bx                 ; vr28
+    add  cx, dx                 ; vr29
+    add  ax, cx                 ; vr30
+    ;                           ; vr30
+    cmp  ax, 136                ; vr30
+    jne  failure                ; vr30
+
+;                     16    (vr57)
+;                 add     (vr58)
+;                     15    (vr56)
+;             add     (vr59)
+;                     14    (vr54)
+;                 add     (vr55)
+;                     13    (vr53)
+;         add     (vr60)
+;                     12    (vr50)
+;                 add     (vr51)
+;                     11    (vr49)
+;             add     (vr52)
+;                     10    (vr47)
+;                 add     (vr48)
+;                     9    (vr46)
+;     add     (vr61)
+;                     8    (vr42)
+;                 add     (vr43)
+;                     7    (vr41)
+;             add     (vr44)
+;                     6    (vr39)
+;                 add     (vr40)
+;                     5    (vr38)
+;         add     (vr45)
+;                     4    (vr35)
+;                 add     (vr36)
+;                     3    (vr34)
+;             add     (vr37)
+;                     2    (vr32)
+;                 add     (vr33)
+;                     1    (vr31)
+; add     (vr62)
+;                     16    (vr26)
+;                 add     (vr27)
+;                     15    (vr25)
+;             add     (vr28)
+;                     14    (vr23)
+;                 add     (vr24)
+;                     13    (vr22)
+;         add     (vr29)
+;                     12    (vr19)
+;                 add     (vr20)
+;                     11    (vr18)
+;             add     (vr21)
+;                     10    (vr16)
+;                 add     (vr17)
+;                     9    (vr15)
+;     add     (vr30)
+;                     8    (vr11)
+;                 add     (vr12)
+;                     7    (vr10)
+;             add     (vr13)
+;                     6    (vr8)
+;                 add     (vr9)
+;                     5    (vr7)
+;         add     (vr14)
+;                     4    (vr4)
+;                 add     (vr5)
+;                     3    (vr3)
+;             add     (vr6)
+;                     2    (vr1)
+;                 add     (vr2)
+;                     1    (vr0)
+; ----
+; Regs needed (approximately): 6
+; --------
+    ;                           ; vr0
+    mov  ax, 1                  ; vr0
+    mov  cx, 2                  ; vr1
+    add  ax, cx                 ; vr2
+    mov  cx, 3                  ; vr3
+    mov  dx, 4                  ; vr4
+    add  cx, dx                 ; vr5
+    add  ax, cx                 ; vr6
+    mov  cx, 5                  ; vr7
+    mov  dx, 6                  ; vr8
+    add  cx, dx                 ; vr9
+    mov  dx, 7                  ; vr10
+    mov  bx, 8                  ; vr11
+    add  dx, bx                 ; vr12
+    add  cx, dx                 ; vr13
+    add  ax, cx                 ; vr14
+    mov  cx, 9                  ; vr15
+    mov  dx, 10                 ; vr16
+    add  cx, dx                 ; vr17
+    mov  dx, 11                 ; vr18
+    mov  bx, 12                 ; vr19
+    add  dx, bx                 ; vr20
+    add  cx, dx                 ; vr21
+    mov  dx, 13                 ; vr22
+    mov  bx, 14                 ; vr23
+    add  dx, bx                 ; vr24
+    mov  bx, 15                 ; vr25
+    mov  si, 16                 ; vr26
+    add  bx, si                 ; vr27
+    add  dx, bx                 ; vr28
+    add  cx, dx                 ; vr29
+    add  ax, cx                 ; vr30
+    mov  cx, 1                  ; vr31
+    mov  dx, 2                  ; vr32
+    add  cx, dx                 ; vr33
+    mov  dx, 3                  ; vr34
+    mov  bx, 4                  ; vr35
+    add  dx, bx                 ; vr36
+    add  cx, dx                 ; vr37
+    mov  dx, 5                  ; vr38
+    mov  bx, 6                  ; vr39
+    add  dx, bx                 ; vr40
+    mov  bx, 7                  ; vr41
+    mov  si, 8                  ; vr42
+    add  bx, si                 ; vr43
+    add  dx, bx                 ; vr44
+    add  cx, dx                 ; vr45
+    mov  dx, 9                  ; vr46
+    mov  bx, 10                 ; vr47
+    add  dx, bx                 ; vr48
+    mov  bx, 11                 ; vr49
+    mov  si, 12                 ; vr50
+    add  bx, si                 ; vr51
+    add  dx, bx                 ; vr52
+    mov  bx, 13                 ; vr53
+    mov  si, 14                 ; vr54
+    add  bx, si                 ; vr55
+    mov  si, 15                 ; vr56
+    mov  di, 16                 ; vr57
+    add  si, di                 ; vr58
+    add  bx, si                 ; vr59
+    add  dx, bx                 ; vr60
+    add  cx, dx                 ; vr61
+    add  ax, cx                 ; vr62
+    ;                           ; vr62
+    cmp  ax, 272                ; vr62
+    jne  failure                ; vr62
+
+;                         16    (vr120)
+;                     add     (vr121)
+;                         15    (vr119)
+;                 add     (vr122)
+;                         14    (vr117)
+;                     add     (vr118)
+;                         13    (vr116)
+;             add     (vr123)
+;                         12    (vr113)
+;                     add     (vr114)
+;                         11    (vr112)
+;                 add     (vr115)
+;                         10    (vr110)
+;                     add     (vr111)
+;                         9    (vr109)
+;         add     (vr124)
+;                         8    (vr105)
+;                     add     (vr106)
+;                         7    (vr104)
+;                 add     (vr107)
+;                         6    (vr102)
+;                     add     (vr103)
+;                         5    (vr101)
+;             add     (vr108)
+;                         4    (vr98)
+;                     add     (vr99)
+;                         3    (vr97)
+;                 add     (vr100)
+;                         2    (vr95)
+;                     add     (vr96)
+;                         1    (vr94)
+;     add     (vr125)
+;                         16    (vr89)
+;                     add     (vr90)
+;                         15    (vr88)
+;                 add     (vr91)
+;                         14    (vr86)
+;                     add     (vr87)
+;                         13    (vr85)
+;             add     (vr92)
+;                         12    (vr82)
+;                     add     (vr83)
+;                         11    (vr81)
+;                 add     (vr84)
+;                         10    (vr79)
+;                     add     (vr80)
+;                         9    (vr78)
+;         add     (vr93)
+;                         8    (vr74)
+;                     add     (vr75)
+;                         7    (vr73)
+;                 add     (vr76)
+;                         6    (vr71)
+;                     add     (vr72)
+;                         5    (vr70)
+;             add     (vr77)
+;                         4    (vr67)
+;                     add     (vr68)
+;                         3    (vr66)
+;                 add     (vr69)
+;                         2    (vr64)
+;                     add     (vr65)
+;                         1    (vr63)
+; add     (vr126)
+;                         16    (vr57)
+;                     add     (vr58)
+;                         15    (vr56)
+;                 add     (vr59)
+;                         14    (vr54)
+;                     add     (vr55)
+;                         13    (vr53)
+;             add     (vr60)
+;                         12    (vr50)
+;                     add     (vr51)
+;                         11    (vr49)
+;                 add     (vr52)
+;                         10    (vr47)
+;                     add     (vr48)
+;                         9    (vr46)
+;         add     (vr61)
+;                         8    (vr42)
+;                     add     (vr43)
+;                         7    (vr41)
+;                 add     (vr44)
+;                         6    (vr39)
+;                     add     (vr40)
+;                         5    (vr38)
+;             add     (vr45)
+;                         4    (vr35)
+;                     add     (vr36)
+;                         3    (vr34)
+;                 add     (vr37)
+;                         2    (vr32)
+;                     add     (vr33)
+;                         1    (vr31)
+;     add     (vr62)
+;                         16    (vr26)
+;                     add     (vr27)
+;                         15    (vr25)
+;                 add     (vr28)
+;                         14    (vr23)
+;                     add     (vr24)
+;                         13    (vr22)
+;             add     (vr29)
+;                         12    (vr19)
+;                     add     (vr20)
+;                         11    (vr18)
+;                 add     (vr21)
+;                         10    (vr16)
+;                     add     (vr17)
+;                         9    (vr15)
+;         add     (vr30)
+;                         8    (vr11)
+;                     add     (vr12)
+;                         7    (vr10)
+;                 add     (vr13)
+;                         6    (vr8)
+;                     add     (vr9)
+;                         5    (vr7)
+;             add     (vr14)
+;                         4    (vr4)
+;                     add     (vr5)
+;                         3    (vr3)
+;                 add     (vr6)
+;                         2    (vr1)
+;                     add     (vr2)
+;                         1    (vr0)
+; ----
+; Regs needed (approximately): 7
+; --------
+    ;                           ; vr0
+    mov  ax, 1                  ; vr0
+    mov  cx, 2                  ; vr1
+    add  ax, cx                 ; vr2
+    mov  cx, 3                  ; vr3
+    mov  dx, 4                  ; vr4
+    add  cx, dx                 ; vr5
+    add  ax, cx                 ; vr6
+    mov  cx, 5                  ; vr7
+    mov  dx, 6                  ; vr8
+    add  cx, dx                 ; vr9
+    mov  dx, 7                  ; vr10
+    mov  bx, 8                  ; vr11
+    add  dx, bx                 ; vr12
+    add  cx, dx                 ; vr13
+    add  ax, cx                 ; vr14
+    mov  cx, 9                  ; vr15
+    mov  dx, 10                 ; vr16
+    add  cx, dx                 ; vr17
+    mov  dx, 11                 ; vr18
+    mov  bx, 12                 ; vr19
+    add  dx, bx                 ; vr20
+    add  cx, dx                 ; vr21
+    mov  dx, 13                 ; vr22
+    mov  bx, 14                 ; vr23
+    add  dx, bx                 ; vr24
+    mov  bx, 15                 ; vr25
+    mov  si, 16                 ; vr26
+    add  bx, si                 ; vr27
+    add  dx, bx                 ; vr28
+    add  cx, dx                 ; vr29
+    add  ax, cx                 ; vr30
+    mov  cx, 1                  ; vr31
+    mov  dx, 2                  ; vr32
+    add  cx, dx                 ; vr33
+    mov  dx, 3                  ; vr34
+    mov  bx, 4                  ; vr35
+    add  dx, bx                 ; vr36
+    add  cx, dx                 ; vr37
+    mov  dx, 5                  ; vr38
+    mov  bx, 6                  ; vr39
+    add  dx, bx                 ; vr40
+    mov  bx, 7                  ; vr41
+    mov  si, 8                  ; vr42
+    add  bx, si                 ; vr43
+    add  dx, bx                 ; vr44
+    add  cx, dx                 ; vr45
+    mov  dx, 9                  ; vr46
+    mov  bx, 10                 ; vr47
+    add  dx, bx                 ; vr48
+    mov  bx, 11                 ; vr49
+    mov  si, 12                 ; vr50
+    add  bx, si                 ; vr51
+    add  dx, bx                 ; vr52
+    mov  bx, 13                 ; vr53
+    mov  si, 14                 ; vr54
+    add  bx, si                 ; vr55
+    mov  si, 15                 ; vr56
+    mov  di, 16                 ; vr57
+    add  si, di                 ; vr58
+    add  bx, si                 ; vr59
+    add  dx, bx                 ; vr60
+    add  cx, dx                 ; vr61
+    add  ax, cx                 ; vr62
+    mov  cx, 1                  ; vr63
+    mov  dx, 2                  ; vr64
+    add  cx, dx                 ; vr65
+    mov  dx, 3                  ; vr66
+    mov  bx, 4                  ; vr67
+    add  dx, bx                 ; vr68
+    add  cx, dx                 ; vr69
+    mov  dx, 5                  ; vr70
+    mov  bx, 6                  ; vr71
+    add  dx, bx                 ; vr72
+    mov  bx, 7                  ; vr73
+    mov  si, 8                  ; vr74
+    add  bx, si                 ; vr75
+    add  dx, bx                 ; vr76
+    add  cx, dx                 ; vr77
+    mov  dx, 9                  ; vr78
+    mov  bx, 10                 ; vr79
+    add  dx, bx                 ; vr80
+    mov  bx, 11                 ; vr81
+    mov  si, 12                 ; vr82
+    add  bx, si                 ; vr83
+    add  dx, bx                 ; vr84
+    mov  bx, 13                 ; vr85
+    mov  si, 14                 ; vr86
+    add  bx, si                 ; vr87
+    mov  si, 15                 ; vr88
+    mov  di, 16                 ; vr89
+    add  si, di                 ; vr90
+    add  bx, si                 ; vr91
+    add  dx, bx                 ; vr92
+    add  cx, dx                 ; vr93
+    mov  dx, 1                  ; vr94
+    mov  bx, 2                  ; vr95
+    add  dx, bx                 ; vr96
+    mov  bx, 3                  ; vr97
+    mov  si, 4                  ; vr98
+    add  bx, si                 ; vr99
+    add  dx, bx                 ; vr100
+    mov  bx, 5                  ; vr101
+    mov  si, 6                  ; vr102
+    add  bx, si                 ; vr103
+    mov  si, 7                  ; vr104
+    mov  di, 8                  ; vr105
+    add  si, di                 ; vr106
+    add  bx, si                 ; vr107
+    add  dx, bx                 ; vr108
+    mov  bx, 9                  ; vr109
+    mov  si, 10                 ; vr110
+    add  bx, si                 ; vr111
+    mov  si, 11                 ; vr112
+    mov  di, 12                 ; vr113
+    add  si, di                 ; vr114
+    add  bx, si                 ; vr115
+    mov  si, 13                 ; vr116
+    mov  di, 14                 ; vr117
+    add  si, di                 ; vr118
+    mov  di, 15                 ; vr119
+    push ax                     ; vr120
+    mov  ax, 16                 ; vr120
+    add  di, ax                 ; vr121
+    add  si, di                 ; vr122
+    add  bx, si                 ; vr123
+    add  dx, bx                 ; vr124
+    add  cx, dx                 ; vr125
+    pop  ax                     ; vr126
+    add  ax, cx                 ; vr126
+    ;                           ; vr126
+    cmp  ax, 544                ; vr126
+    jne  failure                ; vr126
+
+;                             16    (vr247)
+;                         add     (vr248)
+;                             15    (vr246)
+;                     add     (vr249)
+;                             14    (vr244)
+;                         add     (vr245)
+;                             13    (vr243)
+;                 add     (vr250)
+;                             12    (vr240)
+;                         add     (vr241)
+;                             11    (vr239)
+;                     add     (vr242)
+;                             10    (vr237)
+;                         add     (vr238)
+;                             9    (vr236)
+;             add     (vr251)
+;                             8    (vr232)
+;                         add     (vr233)
+;                             7    (vr231)
+;                     add     (vr234)
+;                             6    (vr229)
+;                         add     (vr230)
+;                             5    (vr228)
+;                 add     (vr235)
+;                             4    (vr225)
+;                         add     (vr226)
+;                             3    (vr224)
+;                     add     (vr227)
+;                             2    (vr222)
+;                         add     (vr223)
+;                             1    (vr221)
+;         add     (vr252)
+;                             16    (vr216)
+;                         add     (vr217)
+;                             15    (vr215)
+;                     add     (vr218)
+;                             14    (vr213)
+;                         add     (vr214)
+;                             13    (vr212)
+;                 add     (vr219)
+;                             12    (vr209)
+;                         add     (vr210)
+;                             11    (vr208)
+;                     add     (vr211)
+;                             10    (vr206)
+;                         add     (vr207)
+;                             9    (vr205)
+;             add     (vr220)
+;                             8    (vr201)
+;                         add     (vr202)
+;                             7    (vr200)
+;                     add     (vr203)
+;                             6    (vr198)
+;                         add     (vr199)
+;                             5    (vr197)
+;                 add     (vr204)
+;                             4    (vr194)
+;                         add     (vr195)
+;                             3    (vr193)
+;                     add     (vr196)
+;                             2    (vr191)
+;                         add     (vr192)
+;                             1    (vr190)
+;     add     (vr253)
+;                             16    (vr184)
+;                         add     (vr185)
+;                             15    (vr183)
+;                     add     (vr186)
+;                             14    (vr181)
+;                         add     (vr182)
+;                             13    (vr180)
+;                 add     (vr187)
+;                             12    (vr177)
+;                         add     (vr178)
+;                             11    (vr176)
+;                     add     (vr179)
+;                             10    (vr174)
+;                         add     (vr175)
+;                             9    (vr173)
+;             add     (vr188)
+;                             8    (vr169)
+;                         add     (vr170)
+;                             7    (vr168)
+;                     add     (vr171)
+;                             6    (vr166)
+;                         add     (vr167)
+;                             5    (vr165)
+;                 add     (vr172)
+;                             4    (vr162)
+;                         add     (vr163)
+;                             3    (vr161)
+;                     add     (vr164)
+;                             2    (vr159)
+;                         add     (vr160)
+;                             1    (vr158)
+;         add     (vr189)
+;                             16    (vr153)
+;                         add     (vr154)
+;                             15    (vr152)
+;                     add     (vr155)
+;                             14    (vr150)
+;                         add     (vr151)
+;                             13    (vr149)
+;                 add     (vr156)
+;                             12    (vr146)
+;                         add     (vr147)
+;                             11    (vr145)
+;                     add     (vr148)
+;                             10    (vr143)
+;                         add     (vr144)
+;                             9    (vr142)
+;             add     (vr157)
+;                             8    (vr138)
+;                         add     (vr139)
+;                             7    (vr137)
+;                     add     (vr140)
+;                             6    (vr135)
+;                         add     (vr136)
+;                             5    (vr134)
+;                 add     (vr141)
+;                             4    (vr131)
+;                         add     (vr132)
+;                             3    (vr130)
+;                     add     (vr133)
+;                             2    (vr128)
+;                         add     (vr129)
+;                             1    (vr127)
+; add     (vr254)
+;                             16    (vr120)
+;                         add     (vr121)
+;                             15    (vr119)
+;                     add     (vr122)
+;                             14    (vr117)
+;                         add     (vr118)
+;                             13    (vr116)
+;                 add     (vr123)
+;                             12    (vr113)
+;                         add     (vr114)
+;                             11    (vr112)
+;                     add     (vr115)
+;                             10    (vr110)
+;                         add     (vr111)
+;                             9    (vr109)
+;             add     (vr124)
+;                             8    (vr105)
+;                         add     (vr106)
+;                             7    (vr104)
+;                     add     (vr107)
+;                             6    (vr102)
+;                         add     (vr103)
+;                             5    (vr101)
+;                 add     (vr108)
+;                             4    (vr98)
+;                         add     (vr99)
+;                             3    (vr97)
+;                     add     (vr100)
+;                             2    (vr95)
+;                         add     (vr96)
+;                             1    (vr94)
+;         add     (vr125)
+;                             16    (vr89)
+;                         add     (vr90)
+;                             15    (vr88)
+;                     add     (vr91)
+;                             14    (vr86)
+;                         add     (vr87)
+;                             13    (vr85)
+;                 add     (vr92)
+;                             12    (vr82)
+;                         add     (vr83)
+;                             11    (vr81)
+;                     add     (vr84)
+;                             10    (vr79)
+;                         add     (vr80)
+;                             9    (vr78)
+;             add     (vr93)
+;                             8    (vr74)
+;                         add     (vr75)
+;                             7    (vr73)
+;                     add     (vr76)
+;                             6    (vr71)
+;                         add     (vr72)
+;                             5    (vr70)
+;                 add     (vr77)
+;                             4    (vr67)
+;                         add     (vr68)
+;                             3    (vr66)
+;                     add     (vr69)
+;                             2    (vr64)
+;                         add     (vr65)
+;                             1    (vr63)
+;     add     (vr126)
+;                             16    (vr57)
+;                         add     (vr58)
+;                             15    (vr56)
+;                     add     (vr59)
+;                             14    (vr54)
+;                         add     (vr55)
+;                             13    (vr53)
+;                 add     (vr60)
+;                             12    (vr50)
+;                         add     (vr51)
+;                             11    (vr49)
+;                     add     (vr52)
+;                             10    (vr47)
+;                         add     (vr48)
+;                             9    (vr46)
+;             add     (vr61)
+;                             8    (vr42)
+;                         add     (vr43)
+;                             7    (vr41)
+;                     add     (vr44)
+;                             6    (vr39)
+;                         add     (vr40)
+;                             5    (vr38)
+;                 add     (vr45)
+;                             4    (vr35)
+;                         add     (vr36)
+;                             3    (vr34)
+;                     add     (vr37)
+;                             2    (vr32)
+;                         add     (vr33)
+;                             1    (vr31)
+;         add     (vr62)
+;                             16    (vr26)
+;                         add     (vr27)
+;                             15    (vr25)
+;                     add     (vr28)
+;                             14    (vr23)
+;                         add     (vr24)
+;                             13    (vr22)
+;                 add     (vr29)
+;                             12    (vr19)
+;                         add     (vr20)
+;                             11    (vr18)
+;                     add     (vr21)
+;                             10    (vr16)
+;                         add     (vr17)
+;                             9    (vr15)
+;             add     (vr30)
+;                             8    (vr11)
+;                         add     (vr12)
+;                             7    (vr10)
+;                     add     (vr13)
+;                             6    (vr8)
+;                         add     (vr9)
+;                             5    (vr7)
+;                 add     (vr14)
+;                             4    (vr4)
+;                         add     (vr5)
+;                             3    (vr3)
+;                     add     (vr6)
+;                             2    (vr1)
+;                         add     (vr2)
+;                             1    (vr0)
+; ----
+; Regs needed (approximately): 8
+; --------
+    ;                           ; vr0
+    mov  ax, 1                  ; vr0
+    mov  cx, 2                  ; vr1
+    add  ax, cx                 ; vr2
+    mov  cx, 3                  ; vr3
+    mov  dx, 4                  ; vr4
+    add  cx, dx                 ; vr5
+    add  ax, cx                 ; vr6
+    mov  cx, 5                  ; vr7
+    mov  dx, 6                  ; vr8
+    add  cx, dx                 ; vr9
+    mov  dx, 7                  ; vr10
+    mov  bx, 8                  ; vr11
+    add  dx, bx                 ; vr12
+    add  cx, dx                 ; vr13
+    add  ax, cx                 ; vr14
+    mov  cx, 9                  ; vr15
+    mov  dx, 10                 ; vr16
+    add  cx, dx                 ; vr17
+    mov  dx, 11                 ; vr18
+    mov  bx, 12                 ; vr19
+    add  dx, bx                 ; vr20
+    add  cx, dx                 ; vr21
+    mov  dx, 13                 ; vr22
+    mov  bx, 14                 ; vr23
+    add  dx, bx                 ; vr24
+    mov  bx, 15                 ; vr25
+    mov  si, 16                 ; vr26
+    add  bx, si                 ; vr27
+    add  dx, bx                 ; vr28
+    add  cx, dx                 ; vr29
+    add  ax, cx                 ; vr30
+    mov  cx, 1                  ; vr31
+    mov  dx, 2                  ; vr32
+    add  cx, dx                 ; vr33
+    mov  dx, 3                  ; vr34
+    mov  bx, 4                  ; vr35
+    add  dx, bx                 ; vr36
+    add  cx, dx                 ; vr37
+    mov  dx, 5                  ; vr38
+    mov  bx, 6                  ; vr39
+    add  dx, bx                 ; vr40
+    mov  bx, 7                  ; vr41
+    mov  si, 8                  ; vr42
+    add  bx, si                 ; vr43
+    add  dx, bx                 ; vr44
+    add  cx, dx                 ; vr45
+    mov  dx, 9                  ; vr46
+    mov  bx, 10                 ; vr47
+    add  dx, bx                 ; vr48
+    mov  bx, 11                 ; vr49
+    mov  si, 12                 ; vr50
+    add  bx, si                 ; vr51
+    add  dx, bx                 ; vr52
+    mov  bx, 13                 ; vr53
+    mov  si, 14                 ; vr54
+    add  bx, si                 ; vr55
+    mov  si, 15                 ; vr56
+    mov  di, 16                 ; vr57
+    add  si, di                 ; vr58
+    add  bx, si                 ; vr59
+    add  dx, bx                 ; vr60
+    add  cx, dx                 ; vr61
+    add  ax, cx                 ; vr62
+    mov  cx, 1                  ; vr63
+    mov  dx, 2                  ; vr64
+    add  cx, dx                 ; vr65
+    mov  dx, 3                  ; vr66
+    mov  bx, 4                  ; vr67
+    add  dx, bx                 ; vr68
+    add  cx, dx                 ; vr69
+    mov  dx, 5                  ; vr70
+    mov  bx, 6                  ; vr71
+    add  dx, bx                 ; vr72
+    mov  bx, 7                  ; vr73
+    mov  si, 8                  ; vr74
+    add  bx, si                 ; vr75
+    add  dx, bx                 ; vr76
+    add  cx, dx                 ; vr77
+    mov  dx, 9                  ; vr78
+    mov  bx, 10                 ; vr79
+    add  dx, bx                 ; vr80
+    mov  bx, 11                 ; vr81
+    mov  si, 12                 ; vr82
+    add  bx, si                 ; vr83
+    add  dx, bx                 ; vr84
+    mov  bx, 13                 ; vr85
+    mov  si, 14                 ; vr86
+    add  bx, si                 ; vr87
+    mov  si, 15                 ; vr88
+    mov  di, 16                 ; vr89
+    add  si, di                 ; vr90
+    add  bx, si                 ; vr91
+    add  dx, bx                 ; vr92
+    add  cx, dx                 ; vr93
+    mov  dx, 1                  ; vr94
+    mov  bx, 2                  ; vr95
+    add  dx, bx                 ; vr96
+    mov  bx, 3                  ; vr97
+    mov  si, 4                  ; vr98
+    add  bx, si                 ; vr99
+    add  dx, bx                 ; vr100
+    mov  bx, 5                  ; vr101
+    mov  si, 6                  ; vr102
+    add  bx, si                 ; vr103
+    mov  si, 7                  ; vr104
+    mov  di, 8                  ; vr105
+    add  si, di                 ; vr106
+    add  bx, si                 ; vr107
+    add  dx, bx                 ; vr108
+    mov  bx, 9                  ; vr109
+    mov  si, 10                 ; vr110
+    add  bx, si                 ; vr111
+    mov  si, 11                 ; vr112
+    mov  di, 12                 ; vr113
+    add  si, di                 ; vr114
+    add  bx, si                 ; vr115
+    mov  si, 13                 ; vr116
+    mov  di, 14                 ; vr117
+    add  si, di                 ; vr118
+    mov  di, 15                 ; vr119
+    push ax                     ; vr120
+    mov  ax, 16                 ; vr120
+    add  di, ax                 ; vr121
+    add  si, di                 ; vr122
+    add  bx, si                 ; vr123
+    add  dx, bx                 ; vr124
+    add  cx, dx                 ; vr125
+    pop  ax                     ; vr126
+    add  ax, cx                 ; vr126
+    mov  cx, 1                  ; vr127
+    mov  dx, 2                  ; vr128
+    add  cx, dx                 ; vr129
+    mov  dx, 3                  ; vr130
+    mov  bx, 4                  ; vr131
+    add  dx, bx                 ; vr132
+    add  cx, dx                 ; vr133
+    mov  dx, 5                  ; vr134
+    mov  bx, 6                  ; vr135
+    add  dx, bx                 ; vr136
+    mov  bx, 7                  ; vr137
+    mov  si, 8                  ; vr138
+    add  bx, si                 ; vr139
+    add  dx, bx                 ; vr140
+    add  cx, dx                 ; vr141
+    mov  dx, 9                  ; vr142
+    mov  bx, 10                 ; vr143
+    add  dx, bx                 ; vr144
+    mov  bx, 11                 ; vr145
+    mov  si, 12                 ; vr146
+    add  bx, si                 ; vr147
+    add  dx, bx                 ; vr148
+    mov  bx, 13                 ; vr149
+    mov  si, 14                 ; vr150
+    add  bx, si                 ; vr151
+    mov  si, 15                 ; vr152
+    mov  di, 16                 ; vr153
+    add  si, di                 ; vr154
+    add  bx, si                 ; vr155
+    add  dx, bx                 ; vr156
+    add  cx, dx                 ; vr157
+    mov  dx, 1                  ; vr158
+    mov  bx, 2                  ; vr159
+    add  dx, bx                 ; vr160
+    mov  bx, 3                  ; vr161
+    mov  si, 4                  ; vr162
+    add  bx, si                 ; vr163
+    add  dx, bx                 ; vr164
+    mov  bx, 5                  ; vr165
+    mov  si, 6                  ; vr166
+    add  bx, si                 ; vr167
+    mov  si, 7                  ; vr168
+    mov  di, 8                  ; vr169
+    add  si, di                 ; vr170
+    add  bx, si                 ; vr171
+    add  dx, bx                 ; vr172
+    mov  bx, 9                  ; vr173
+    mov  si, 10                 ; vr174
+    add  bx, si                 ; vr175
+    mov  si, 11                 ; vr176
+    mov  di, 12                 ; vr177
+    add  si, di                 ; vr178
+    add  bx, si                 ; vr179
+    mov  si, 13                 ; vr180
+    mov  di, 14                 ; vr181
+    add  si, di                 ; vr182
+    mov  di, 15                 ; vr183
+    push ax                     ; vr184
+    mov  ax, 16                 ; vr184
+    add  di, ax                 ; vr185
+    add  si, di                 ; vr186
+    add  bx, si                 ; vr187
+    add  dx, bx                 ; vr188
+    add  cx, dx                 ; vr189
+    mov  ax, 1                  ; vr190
+    mov  dx, 2                  ; vr191
+    add  ax, dx                 ; vr192
+    mov  dx, 3                  ; vr193
+    mov  bx, 4                  ; vr194
+    add  dx, bx                 ; vr195
+    add  ax, dx                 ; vr196
+    mov  dx, 5                  ; vr197
+    mov  bx, 6                  ; vr198
+    add  dx, bx                 ; vr199
+    mov  bx, 7                  ; vr200
+    mov  si, 8                  ; vr201
+    add  bx, si                 ; vr202
+    add  dx, bx                 ; vr203
+    add  ax, dx                 ; vr204
+    mov  dx, 9                  ; vr205
+    mov  bx, 10                 ; vr206
+    add  dx, bx                 ; vr207
+    mov  bx, 11                 ; vr208
+    mov  si, 12                 ; vr209
+    add  bx, si                 ; vr210
+    add  dx, bx                 ; vr211
+    mov  bx, 13                 ; vr212
+    mov  si, 14                 ; vr213
+    add  bx, si                 ; vr214
+    mov  si, 15                 ; vr215
+    mov  di, 16                 ; vr216
+    add  si, di                 ; vr217
+    add  bx, si                 ; vr218
+    add  dx, bx                 ; vr219
+    add  ax, dx                 ; vr220
+    mov  dx, 1                  ; vr221
+    mov  bx, 2                  ; vr222
+    add  dx, bx                 ; vr223
+    mov  bx, 3                  ; vr224
+    mov  si, 4                  ; vr225
+    add  bx, si                 ; vr226
+    add  dx, bx                 ; vr227
+    mov  bx, 5                  ; vr228
+    mov  si, 6                  ; vr229
+    add  bx, si                 ; vr230
+    mov  si, 7                  ; vr231
+    mov  di, 8                  ; vr232
+    add  si, di                 ; vr233
+    add  bx, si                 ; vr234
+    add  dx, bx                 ; vr235
+    mov  bx, 9                  ; vr236
+    mov  si, 10                 ; vr237
+    add  bx, si                 ; vr238
+    mov  si, 11                 ; vr239
+    mov  di, 12                 ; vr240
+    add  si, di                 ; vr241
+    add  bx, si                 ; vr242
+    mov  si, 13                 ; vr243
+    mov  di, 14                 ; vr244
+    add  si, di                 ; vr245
+    mov  di, 15                 ; vr246
+    push cx                     ; vr247
+    mov  cx, 16                 ; vr247
+    add  di, cx                 ; vr248
+    add  si, di                 ; vr249
+    add  bx, si                 ; vr250
+    add  dx, bx                 ; vr251
+    add  ax, dx                 ; vr252
+    pop  cx                     ; vr253
+    add  cx, ax                 ; vr253
+    pop  ax                     ; vr254
+    add  ax, cx                 ; vr254
+    ;                           ; vr254
+    cmp  ax, 1088               ; vr254
+    jne  failure                ; vr254
+
     mov  dx, msg_success
     mov  ah, 9
     int  0x21
