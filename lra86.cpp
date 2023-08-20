@@ -3,7 +3,9 @@
   2-clause BSD license.
 */
 #include <string>
+#include <cstring>
 #include <vector>
+#include <algorithm>
 #include <iostream>
 
 #include "check.h"
@@ -259,7 +261,10 @@ struct Node
   virtual ~Node() { delete child_[0]; delete child_[1]; }
 
   virtual bool IsSymmetric() const { return false; } // some override
+  virtual bool LeftFirst() const { return false; }
+  virtual bool RightFirst() const { return false; }
   virtual bool PrefersRight() const { return false; } // shifts override
+  virtual int SameRegCntAddend() const { return 1; }
   virtual int MinRegCnt() const { return 0; } // (i)div, (i)rem override
   virtual std::string PrintOperation() const = 0; // all override
   virtual std::string PrintInstruction() const // (i)rem, loads, stores override
@@ -267,7 +272,7 @@ struct Node
     return PrintOperation();
   }
 
-  int SelectFirst();
+  virtual int SelectFirst();
   void AssignVReg(int vr) { vr_ = vr; }
   void SetUserVReg(int user_vr) { user_vr_ = user_vr; }
   void AssignVRegs(int* p_vr_cnt = nullptr);
@@ -322,6 +327,7 @@ struct Node
 // See also Strahler number and Sethi-Ullman algorithm.
 int Node::SelectFirst()
 {
+  first_ = 0;
   if (!child_[0])
   {
     // Leaf.
@@ -335,8 +341,12 @@ int Node::SelectFirst()
   }
   // Binary.
   int nr = child_[1]->SelectFirst();
-  first_ = (nl == nr) ? -1 : ((nl > nr) ? 0 : 1);
-  int lrmax = (nl == nr) ? (nl + 1) : ((nl > nr) ? nl : nr);
+  if (RightFirst())
+    first_ = 1;
+  else if (!LeftFirst())
+    first_ = (nl == nr) ? -1 : ((nl > nr) ? 0 : 1);
+  // else `first_ = 0;` by default above.
+  int lrmax = (nl == nr) ? (nl + SameRegCntAddend()) : ((nl > nr) ? nl : nr);
   // (i)div uses ax, another register for the divisor and also clobbers dx
   // (not just by way of producing a remainder in dx, but also by requiring
   // the dividend zero- or sign-extended from ax into dx before (i)div,
@@ -677,7 +687,7 @@ void Node::PrintExprTree(std::ostream& os, int level)
   {
     os << "    (vr" << vr_;
 #if 0
-    os << "; u@" << n->user_vr_;
+    os << "; u@" << user_vr_;
 #endif
     os << ")";
   }
