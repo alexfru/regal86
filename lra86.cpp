@@ -272,7 +272,7 @@ struct Node
     return PrintOperation();
   }
 
-  virtual int SelectFirst();
+  virtual int SelectFirst(); // args, calls override
   void AssignVReg(int vr) { vr_ = vr; }
   void SetUserVReg(int user_vr) { user_vr_ = user_vr; }
   void AssignVRegs(int* p_vr_cnt = nullptr);
@@ -733,6 +733,19 @@ struct NodeInt : Node
     return oss.str();
   }
   virtual void Eval() {}
+};
+
+// label (leaf node).
+struct NodeLabel : Node
+{
+  NodeLabel() = delete;
+  NodeLabel(const std::string& label) { label_ = label; }
+  virtual std::string PrintOperation() const
+  {
+    return label_;
+  }
+  virtual void Eval() {}
+  std::string label_;
 };
 
 struct NodeNeg : Node
@@ -1711,6 +1724,163 @@ void Run(Node* n)
   delete n;
 }
 
+// Holds an argument node (in left child) and chains
+// with the next argument holder (in right child, if any).
+struct NodeArgHolder : Node
+{
+  NodeArgHolder() = delete;
+  NodeArgHolder(Node* left, NodeArgHolder* right = nullptr) : Node(left, right) {}
+  virtual std::string PrintOperation() const { return "arg "; }
+  virtual int SelectFirst()
+  {
+    int nr, nl, n;
+    first_ = 0;
+    if (child_[1])
+    {
+      // Recurse into chained args
+      // (rightmost/last arg is evaluated first).
+      first_ = 1;
+      nr = child_[1]->SelectFirst();
+    }
+    nl = child_[0]->SelectFirst();
+    // Each arg will be evaluated and pushed onto the stack.
+    // Somewhat meaningful number of registers needed by
+    // all chained args: just take the maximum.
+    n = (child_[1] && nr > nl) ? nr : nl;
+    return n;
+  }
+  virtual void AllocHRegs(HReg desired)
+  {
+    (void)desired;
+
+    CHECK(first_ == (child_[1] != nullptr));
+
+    if (child_[1])
+      child_[1]->AllocHRegs(HRegAny);
+
+    child_[0]->AllocHRegs(HRegAny);
+    CHECK(child_[0]->InReg());
+    hr_[2] = hr_[0] = Ensure(child_[0], HRegAny); // A no-op.
+    Free(hr_[2]);
+
+    CurrentOutputNode = this; // Associate generated instructions with this node.
+
+    std::ostringstream oss;
+    oss << "push " << hr_[2];
+    CurrentOutputNode->instructions.push_back(oss.str());
+  }
+  unsigned short ChainedArgCount()
+  {
+    return 1 + (child_[1] ?
+                static_cast<NodeArgHolder*>(child_[1])->ChainedArgCount() :
+                0);
+  }
+  virtual void Eval()
+  {
+    CHECK(false);
+  }
+};
+
+struct NodeCall : Node
+{
+  NodeCall() = delete;
+  NodeCall(unsigned short test_val,
+           Node* left, NodeArgHolder* right = nullptr) : Node(left, right)
+  {
+    val_ = test_val;
+  }
+  virtual std::string PrintOperation() const { return "()  "; }
+  virtual int SelectFirst()
+  {
+    int nr, nl, n;
+    first_ = 0;
+    if (child_[1])
+    {
+      // Args are evaluated before subroutine address.
+      first_ = 1;
+      nr = child_[1]->SelectFirst();
+    }
+    nl = child_[0]->SelectFirst();
+    // Somewhat meaningful number of registers needed by a
+    // call: just take the maximum between the chained args
+    // and subroutine address.
+    n = (child_[1] && nr > nl) ? nr : nl;
+    // Since all regs live across a call are spilled, that
+    // number can't be less than the total number of allocatable
+    // registers, HRegCnt.
+    n = (n < HRegCnt) ? HRegCnt : n;
+    return n;
+  }
+  virtual void AllocHRegs(HReg desired)
+  {
+    struct Spill { Node* n; HReg r; } spills[HRegCnt];
+    int spillCnt = 0;
+
+    (void)desired;
+
+    CHECK(first_ == (child_[1] != nullptr));
+
+    // For simplicity always spill all regs live across a call.
+
+    // Find live regs.
+    for (int i = 0; i < HRegCnt; i++)
+      if (NodeFromHReg[i])
+      {
+        spills[spillCnt].n = NodeFromHReg[i];
+        spills[spillCnt++].r = HReg(i);
+      }
+    // Descending sort them by user_vr_.
+    std::sort(std::begin(spills),
+              std::begin(spills) + spillCnt,
+              [](struct Spill s1, struct Spill s2)->bool {
+                return s1.n->user_vr_ > s2.n->user_vr_;
+              });
+    // And spill them.
+    for (int i = 0; i < spillCnt; i++)
+      Free(spills[i].r, /*spill*/true);
+
+    // Recursively AllocHRegs(HRegAny) for args (last/right to first/left),
+    // each arg being pushed and its reg freed.
+    if (child_[1])
+      child_[1]->AllocHRegs(HRegAny);
+
+    // AllocHRegs(HRegAny) for the call address, call and free the reg.
+
+    child_[0]->AllocHRegs(HRegAny);
+    CHECK(child_[0]->InReg());
+    hr_[0] = Ensure(child_[0], HRegAny); // A no-op.
+    Free(hr_[0]);
+
+    for (int i = 0; i < HRegCnt; i++)
+      CHECK(!NodeFromHReg[i]);
+
+    CurrentOutputNode = this; // Associate generated instructions with this node.
+
+    // Set output to AX.
+    hr_[2] = Allocate(this, HRegAX);
+    CHECK(hr_[2] == HRegAX);
+
+    // Actual call.
+    std::ostringstream oss;
+    oss << "call " << hr_[0];
+    CurrentOutputNode->instructions.push_back(oss.str());
+
+    // Remove args from stack, if any.
+    if (child_[1])
+    {
+      std::ostringstream oss;
+      oss << "add  sp, "
+          << static_cast<NodeArgHolder*>(child_[1])->ChainedArgCount() * 2;
+      CurrentOutputNode->instructions.push_back(oss.str());
+    }
+  }
+  virtual void Eval()
+  {
+    // Can't eval a call.
+    // Just use the value received in the constructor.
+  }
+};
+
 #define USE_MANY_REGS5() \
   new NodeAdd( \
     new NodeAdd(new NodeAdd(new NodeAdd(new NodeInt(1), new NodeInt(2)),    \
@@ -1910,6 +2080,76 @@ int main()
   Run(USE_MANY_REGS7()); // Use 7 regs, 1 spill.
   Run(USE_MANY_REGS8()); // Use 8 regs, 2 spills in a branch.
 
+  Run(new NodeCall(10, new NodeLabel("_ten")));
+  Run(new NodeCall(8,
+                   new NodeLabel("_popcnt"),
+                   new NodeArgHolder(new NodeInt(0x55AA))));
+  Run(new NodeCall(3,
+                   new NodeLabel("_add"),
+                   new NodeArgHolder(new NodeInt(1),
+                                     new NodeArgHolder(new NodeInt(2)))));
+
+  Run(new NodeIDiv(
+    new NodeShLft(
+      new NodeInt(1),
+      new NodeCall(
+        8,
+        new NodeLabel("_add"),
+        new NodeArgHolder(new NodeIRem(new NodeInt(5), new NodeInt(3)),
+          new NodeArgHolder(new NodeMul(new NodeInt(2), new NodeInt(3)))
+        )
+      )
+    ),
+    new NodeInt(4)
+  ));
+
+  Run(new NodeAdd(
+    new NodeCall(3,
+                 new NodeLabel("_add"),
+                 new NodeArgHolder(new NodeInt(1),
+                                   new NodeArgHolder(new NodeInt(2)))),
+    // First call's result is spilled by second call.
+    new NodeCall(12,
+                 new NodeLabel("_add"),
+                 new NodeArgHolder(new NodeInt(4),
+                                   new NodeArgHolder(new NodeInt(8))))
+  ));
+
+  Run(new NodeCall(
+    15,
+    new NodeLabel("_add"),
+    new NodeArgHolder(
+      new NodeCall(
+        3,
+        new NodeLabel("_add"),
+        new NodeArgHolder(
+          new NodeInt(1),
+          new NodeArgHolder(new NodeInt(2)))
+      ),
+      new NodeArgHolder(
+        new NodeCall(
+          12,
+          new NodeLabel("_add"),
+          new NodeArgHolder(
+            new NodeInt(4),
+            new NodeArgHolder(new NodeInt(8)))
+        )
+      )
+    )
+  ));
+
+  Run(new NodeAdd(
+    new NodeSub(
+      USE_MANY_REGS6(),
+      USE_MANY_REGS6() // One USE_MANY_REGS6()'s result is spilled.
+    ),
+    new NodeSub(
+      USE_MANY_REGS6(), // Spills result of above NodeSub().
+      new NodeCall(10, // Spills result of above USE_MANY_REGS6().
+                   new NodeLabel("_ten"))
+    )
+  ));
+
   std::cout << "\n"
                "    mov  dx, msg_success\n"
                "    mov  ah, 9\n"
@@ -1939,6 +2179,34 @@ int main()
   std::cout << "\n"
                "msg_failure:\n"
                "    db   \"FAILURE!\", 13, 10, \"$\"\n";
+
+  std::cout << "\n"
+               "_ten:\n"
+               "    mov  ax, 10\n"
+               "    ret\n";
+
+  std::cout << "\n"
+               "_popcnt:\n"
+               "    push bp\n"
+               "    mov  bp, sp\n"
+               "    mov  dx, [bp+4]\n"
+               "    mov  cx, 16\n"
+               "    xor  ax, ax\n"
+               "_popcnt_loop:\n"
+               "    add  dx, dx\n"
+               "    adc  ax, 0\n"
+               "    loop _popcnt_loop\n"
+               "    pop  bp\n"
+               "    ret\n";
+
+  std::cout << "\n"
+               "_add:\n"
+               "    push bp\n"
+               "    mov  bp, sp\n"
+               "    mov  ax, [bp+4]\n"
+               "    add  ax, [bp+6]\n"
+               "    pop  bp\n"
+               "    ret\n";
 
   return 0;
 }

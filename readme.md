@@ -109,6 +109,7 @@ Outside of the scope of this work are:
 *   data types other than 8-bit bytes and 16-bit words (e.g. floats, structs)
 *   conditional/ternary operators like in C/C++
 *   function calls and calling conventions
+    (however, a simple implementation is included)
 *   use of immediate and memory operands directly in ALU instructions
     (we use separate load/store instructions instead)
 
