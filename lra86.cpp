@@ -1662,68 +1662,6 @@ struct NodeSb : Node
   }
 };
 
-void Run(Node* n)
-{
-  std::cout << '\n';
-
-  // Reinitialize the globals.
-  for (int hr = 0; hr < HRegCnt; hr++)
-    NodeFromHReg[hr] = nullptr;
-  CurrentOutputNode = nullptr;
-
-  // Preprocess the expression tree.
-  int regs_needed = n->SelectFirst();
-  n->AssignVRegs();
-
-  // Print the expression tree.
-  n->PrintExprTree(std::cout);
-  std::cout << "; ----\n";
-  std::cout << "; Regs needed (approximately): " << regs_needed << '\n';
-  std::cout << "; --------\n";
-
-  // Evaluate the expression and generate instructions to
-  // initialize input memory values.
-  n->Eval();
-  CHECK(!CurrentOutputNode);
-  n->GenMemValues();
-  CHECK(CurrentOutputNode);
-  CurrentOutputNode->instructions.push_back(";");
-
-  // Allocate hardware registers and generate code
-  // for the expression tree.
-#if 01
-  n->AllocHRegs();
-#else
-  // If needed, we may force the result into a specific register.
-  HReg desired = HRegAX;
-  n->AllocHRegs(desired);
-  if (SpecificHReg(desired) && (n->hr_[2] != desired))
-  {
-    MoveToDesired(desired, n->hr_[2]);
-    n->hr_[2] = desired;
-  }
-#endif
-  // Some more sanity checks.
-  HReg out_reg = n->hr_[2];
-  CHECK(SpecificHReg(out_reg));
-  for (int hr = 0; hr < out_reg; hr++)
-    CHECK(!NodeFromHReg[hr]);
-  for (int hr = out_reg + 1; hr < HRegCnt; hr++)
-    CHECK(!NodeFromHReg[hr]);
-  CHECK(NodeFromHReg[out_reg] == n);
-
-  // Generate register and memory checks.
-  CHECK(CurrentOutputNode == n);
-  CurrentOutputNode->instructions.push_back(";");
-  n->GenRegCheck();
-  n->GenMemChecks();
-
-  // Print generated instructions.
-  n->PrintInstructions(std::cout);
-
-  delete n;
-}
-
 // Holds an argument node (in left child) and chains
 // with the next argument holder (in right child, if any).
 struct NodeArgHolder : Node
@@ -1880,6 +1818,68 @@ struct NodeCall : Node
     // Just use the value received in the constructor.
   }
 };
+
+void Run(Node* n)
+{
+  std::cout << '\n';
+
+  // Reinitialize the globals.
+  for (int hr = 0; hr < HRegCnt; hr++)
+    NodeFromHReg[hr] = nullptr;
+  CurrentOutputNode = nullptr;
+
+  // Preprocess the expression tree.
+  int regs_needed = n->SelectFirst();
+  n->AssignVRegs();
+
+  // Print the expression tree.
+  n->PrintExprTree(std::cout);
+  std::cout << "; ----\n";
+  std::cout << "; Regs needed (approximately): " << regs_needed << '\n';
+  std::cout << "; --------\n";
+
+  // Evaluate the expression and generate instructions to
+  // initialize input memory values.
+  n->Eval();
+  CHECK(!CurrentOutputNode);
+  n->GenMemValues();
+  CHECK(CurrentOutputNode);
+  CurrentOutputNode->instructions.push_back(";");
+
+  // Allocate hardware registers and generate code
+  // for the expression tree.
+#if 01
+  n->AllocHRegs();
+#else
+  // If needed, we may force the result into a specific register.
+  HReg desired = HRegAX;
+  n->AllocHRegs(desired);
+  if (SpecificHReg(desired) && (n->hr_[2] != desired))
+  {
+    MoveToDesired(desired, n->hr_[2]);
+    n->hr_[2] = desired;
+  }
+#endif
+  // Some more sanity checks.
+  HReg out_reg = n->hr_[2];
+  CHECK(SpecificHReg(out_reg));
+  for (int hr = 0; hr < out_reg; hr++)
+    CHECK(!NodeFromHReg[hr]);
+  for (int hr = out_reg + 1; hr < HRegCnt; hr++)
+    CHECK(!NodeFromHReg[hr]);
+  CHECK(NodeFromHReg[out_reg] == n);
+
+  // Generate register and memory checks.
+  CHECK(CurrentOutputNode == n);
+  CurrentOutputNode->instructions.push_back(";");
+  n->GenRegCheck();
+  n->GenMemChecks();
+
+  // Print generated instructions.
+  n->PrintInstructions(std::cout);
+
+  delete n;
+}
 
 #define USE_MANY_REGS5() \
   new NodeAdd( \
